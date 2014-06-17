@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wealth Accumulation Simulator</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Wealth Accumulation Simulator">
+  <meta name="author" content="Edward O'Donnell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Wealth Accumulation Simulator</h1>
+    <h2>Or, how I learned to love random numbers</h2>
+    <p>Edward O'Donnell<br/>Village Idiot</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Simulation of wealth Accumulation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This presentation will demonstrate how to use a simulation program
+in R to project the growth of capital assets. The program runs on RStudio's Shiny Server available at <a href="https://eddyod.shinyapps.io/wealth/">Wealth Accumulation Simulation at Shinyapps</a>. This simulation is an adaptation of the <a href="http://glimmer.rstudio.com/systematicin/retirement.withdrawal/">retirement app</a> from
+<a href="http://systematicinvestor.wordpress.com/">Systematic Investor</a>.
+</p>
+
+<p>The simulation starts with some parameters that are adjusted by the user. These are as follows:</p>
+
+<ol>
+<li>Set number of years to accumulate capital.</li>
+<li>Set starting amount of wealth.</li>
+<li>Set annual rate of return.</li>
+<li>Set risk level of rate of return (standard deviation).</li>
+<li>Set inflation rate.</li>
+<li>Set inflation rate volatility.</li>
+<li>Set monthly deposits.</li>
+<li>Set number of simulations.</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Simulation Process</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>After any of the parameters are set, the shiny reactive inputs will rerun the simulation. The user can also use the submit button to rerun the simulation. The simulation takes all the parameters and runs through a loop which has a length of years * 12. All the calculations are done with monthly data. During each iteration, random number is drawn from a normal distribution with mean = rate of return and the standard deviation = to the risk the user inputed. This number is also added to the monthly deposit and the inflation rate is subtracted. Each time the simulation is run, two graphs and a summary table are produced.
+</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Multiple line chart of the simulation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Multiple line chart with each line representing one simulation</p>
+
+<p><img src="linechart.png"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Histogram of final period values</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This chart is a histogram with density plot of the final values from each simulation. </p>
+
+<p><img src="histogram.png"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Simulation of wealth Accumulation'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Simulation Process'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Multiple line chart of the simulation'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Histogram of final period values'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
