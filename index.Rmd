@@ -1,5 +1,5 @@
 ---
-title       : Wealth Accumulation Simulator
+title       : Capital Accumulation Simulator
 subtitle    : Or, how I learned to love random numbers
 author      : Edward O'Donnell
 job         : Village Idiot
@@ -11,7 +11,7 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
 
-## Simulation of wealth Accumulation
+## Simulation of Capital Accumulation
 <p>This presentation will demonstrate how to use a simulation program
 in R to project the growth of capital assets. The program runs on RStudio's Shiny Server available at <a href="https://eddyod.shinyapps.io/wealth/">Wealth Accumulation Simulation at Shinyapps</a>. This simulation is an adaptation of the <a href="http://glimmer.rstudio.com/systematicin/retirement.withdrawal/">retirement app</a> from
 <a href="http://systematicinvestor.wordpress.com/">Systematic Investor</a>.
@@ -30,7 +30,15 @@ in R to project the growth of capital assets. The program runs on RStudio's Shin
 
 ## Simulation Process
 
-<p>After any of the parameters are set, the shiny reactive inputs will rerun the simulation. The user can also use the submit button to rerun the simulation. The simulation takes all the parameters and runs through a loop which has a length of years * 12. All the calculations are done with monthly data. During each iteration, random number is drawn from a normal distribution with mean = rate of return and the standard deviation = to the risk the user inputed. This number is also added to the monthly deposit and the inflation rate is subtracted. Each time the simulation is run, two graphs and a summary table are produced.
+<p>After any of the parameters are set, the shiny reactive inputs will rerun the simulation. The user can also use the submit button to rerun the simulation. The simulation takes all the parameters and runs through a loop which has a length of years * 12. All the calculations are done with monthly data. During each iteration, a random number is drawn from a normal distribution with mean = rate of return and the standard deviation = to the risk the user inputed. The following R code is used:</p>
+```{r}
+n_obs = 12
+monthly.mean.return = .075
+monthly.ret.std.dev = .15
+capital <- rnorm(n_obs, mean = monthly.mean.return, sd = monthly.ret.std.dev)
+head(capital)
+```
+<p>This number is also added to the monthly deposit and the inflation rate is subtracted. Each time the simulation is run, two graphs and a summary table are produced.
 </p>
 
 ---

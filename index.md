@@ -30,7 +30,20 @@ in R to project the growth of capital assets. The program runs on RStudio's Shin
 
 ## Simulation Process
 
-<p>After any of the parameters are set, the shiny reactive inputs will rerun the simulation. The user can also use the submit button to rerun the simulation. The simulation takes all the parameters and runs through a loop which has a length of years * 12. All the calculations are done with monthly data. During each iteration, random number is drawn from a normal distribution with mean = rate of return and the standard deviation = to the risk the user inputed. This number is also added to the monthly deposit and the inflation rate is subtracted. Each time the simulation is run, two graphs and a summary table are produced.
+<p>After any of the parameters are set, the shiny reactive inputs will rerun the simulation. The user can also use the submit button to rerun the simulation. The simulation takes all the parameters and runs through a loop which has a length of years * 12. All the calculations are done with monthly data. During each iteration, a random number is drawn from a normal distribution with mean = rate of return and the standard deviation = to the risk the user inputed. The following R code is used:</p>
+
+```r
+n_obs = 12
+monthly.mean.return = .075
+monthly.ret.std.dev = .15
+capital <- rnorm(n_obs, mean = monthly.mean.return, sd = monthly.ret.std.dev)
+head(capital)
+```
+
+```
+## [1]  0.26319 -0.08427  0.23187 -0.02620  0.04211  0.03143
+```
+<p>This number is also added to the monthly deposit and the inflation rate is subtracted. Each time the simulation is run, two graphs and a summary table are produced.
 </p>
 
 ---
