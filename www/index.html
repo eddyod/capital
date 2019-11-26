@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Retirement simulator</title>
+<meta name="keywords"
+	content="401k, 401(k), 401(k) retirement, 401(k) savings, 401(k) calculator, 401(k) retirement calculator" />
+<meta name="description"
+	content="Use the 401(k) savings calculator for your retirement planning. 
+    See how changes risk, rate of return, contributions, inflation, and retirement age will affect your retirement savings plan." />
+<meta property="og:title" content="401(k) Savings & Planning Calculator" />
+<meta property="og:site_name" content="MephistoSoftware" />
+<meta property="og:description"
+	content="Use the 401(k) savings calculator for your retirement planning. See how changes to salary, contributions, stock and inflation volatility, retirement age and rate of return will affect your retirement savings plan." />
+
+<script src="shared/jquery.js" type="text/javascript"></script>
+<script src="shared/shiny.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="shared/shiny.css" />
+<script type="application/shiny-singletons">d9824d41b9a6aefe883ba073d83925ecd8434247,48140218b235d2bc58917def24b8a9f2a8d85f9f</script>
+<link href="https://www.mephistosoftware.com/css/bootstrap.min.css" media="all" rel="stylesheet">
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css" /> 
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+
+<script src="__assets__/sockjs-0.3.min.js"></script>
+<script src="__assets__/shiny-server.js"></script>
+<style>
+
+pre {
+font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+/*	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono,DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,serif; */
+	margin-bottom: 10px;
+	overflow: auto;
+	/* width: auto; */
+	padding: 5px;
+	background-color: #eee;
+	/* width: 650px!ie7; */
+	padding-bottom: 20px!ie7;
+	max-height: 600px;
+	border: 2px solid #3A84DE;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<!-- Static navbar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Mephisto Software</a>
+				</div>
+
+				<div id="navbar" class="collapse navbar-collapse">
+
+
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="https://www.mephistosoftware.com">
+								<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+								Home
+						</a></li>
+
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false"> <span
+								class="glyphicon glyphicon-signal" aria-hidden="true"></span>
+								Financial Data <span class="caret"></span>
+						</a>
+
+							<ul class="dropdown-menu">
+								<li><a href="/shiny/401k_simulator/">401K Simulator</a></li>
+								<li><a href="/shiny/retsim/">Retirement Simulator</a></li>
+								<li><a href="/matrix/exchange-rate">Exchange Rates</a></li>
+							</ul>
+                  </li>
+
+
+
+
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false"> <span
+								class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>Sci-Fi
+								TV Shows<span class="caret"></span>
+						</a>
+
+							<ul class="dropdown-menu">
+								<li role="separator" class="divider"></li>
+								<li class="dropdown-header">Star Trek</li>
+								<li><a href="/matrix/episode-listing?show=1">The
+										Original Series (TOS)</a></li>
+								<li><a href="/matrix/episode-listing?show=2">The Next
+										Generation</a></li>
+								<li><a href="/matrix/episode-listing?show=3">Voyager</a></li>
+								<li><a href="/matrix/episode-listing?show=4">Deep Space
+										Nine (DS9)</a></li>
+								<li><a href="/matrix/episode-listing?show=5">Enterprise</a></li>
+								<li role="separator" class="divider"></li>
+								<li class="dropdown-header">Star Gate</li>
+								<li><a href="/matrix/episode-listing?show=6">StarGate
+										SG1 (SG1)</a></li>
+								<li><a href="/matrix/episode-listing?show=7">StarGate
+										Atlantis</a></li>
+								<li><a href="/matrix/episode-listing?show=8">StarGate
+										Universe</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/matrix/episode-listing?show=9">Farscape</a></li>
+							</ul></li>
+
+
+					</ul>
+				</div>
+				<!-- /.nav-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+		<!-- /.navbar -->
+
+
+
+		<div class="row row-offcanvas row-offcanvas-right">
+			<div class="jumbotron">
+
+				<!--  content goes here -->
+				<h3>Retirement simulator</h3>
+
+				<p>
+					This application will allow you to forecast your capital
+					accumlation and expenditures over time. It will take your
+					monthly contributions,Social Security and a pension into consideration. The defaults are:
+				</p>
+               <ul>
+               <li>Work for 10 more years.</li>
+               <li>Start with $X in savings.</li>
+               <li>Annual rate of return is %X with a risk on investment of %5.</li>
+               <li>You will wait 15 years to collect SSN and then will receive $X/month.</li>
+               <li>Annual inflation rate is %2 with a %1 volatility rate.</li>
+               <li>You will deposit $X/month in savings prior to retirement.</li>
+               <li>You will withdrawal $X/month from your savings.</li>
+               <li>You have a monthly pension paying $X/month.</li>
+               <li>You have a home you will sell for $X in Y years</li>
+               <li>Run 25 simulations.</li>
+               </ul>
+
+
+				<div class="row-fluid">
+					<div class="col-sm-3">
+						<div>
+							<label class="control-label" for="a_years_to_save">
+								Years to save before retirement:</label> <input id="a_years_to_save"
+								type="slider" name="a_years_to_save" value="10"
+								class="js-range-slider" data-min="0" data-max="25" data-step="1"
+								data-skin="plastic" data-round="FALSE" data-locale="us"
+								data-format="#,##0.#####" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_start_capital">Money
+								to start with:</label> <input id="a_start_capital" type="slider"
+								name="a_start_capital" value="100000" class="js-range-slider"
+								data-min="0" data-max="1000000" data-step="1000"
+								data-skin="plastic" data-round="FALSE" data-locale="us"
+								data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_ssn">
+								Monthly SSN Payments</label> <input
+								id="a_ssn" type="slider"
+								name="a_ssn" value="1000" class="js-range-slider"
+								data-min="0" data-max="10000" data-step="100" data-skin="plastic"
+								data-round="FALSE" data-locale="us" data-format="#,##0.#####"
+								data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_ssn_age">
+								# of years to wait to collect SSN</label> <input
+								id="a_ssn_age" type="slider"
+								name="a_ssn_age" value="15" class="js-range-slider"
+								data-min="0" data-max="25" data-step="1" data-skin="plastic"
+								data-round="FALSE" data-locale="us" data-format="#,##0.#####"
+								data-smooth="FALSE" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div>
+							<label class="control-label" for="a_annual_mean_return">Annual
+								rate of return (in %):</label> <input id="a_annual_mean_return"
+								type="slider" name="a_annual_mean_return" value="3"
+								class="js-range-slider" data-min="-10" data-max="30"
+								data-step="1" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="#,##0.#####" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_annual_ret_std_dev">Annual
+								risk on investment (in %):</label> <input
+								id="a_annual_ret_std_dev" type="slider"
+								name="a_annual_ret_std_dev" value="2" class="js-range-slider"
+								data-min="0" data-max="25" data-step=".5" data-skin="plastic"
+								data-round="FALSE" data-locale="us" data-format="#,##0.#####"
+								data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_annual_inflation">Annual
+								inflation rate (in %):</label> <input id="a_annual_inflation"
+								type="slider" name="a_annual_inflation" value="2"
+								class="js-range-slider" data-min="0" data-max="20"
+								data-step="0.1" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="#,##0.#####" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_annual_inf_std_dev">Annual
+								inflation volatility (in %):</label> <input id="a_annual_inf_std_dev"
+								type="slider" name="a_annual_inf_std_dev" value="1"
+								class="js-range-slider" data-min="0" data-max="5"
+								data-step="0.05" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="#,##0.#####" data-smooth="FALSE" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div>
+							<label class="control-label" for="a_monthly_deposits">Monthly
+								deposits:</label> <input id="a_monthly_deposits" type="slider"
+								name="a_monthly_deposits" value="2000" class="js-range-slider"
+								data-min="0" data-max="10000" data-step="100"
+								data-skin="plastic" data-round="FALSE" data-locale="us"
+								data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_monthly_withdrawals">Monthly
+								withdrawals:</label> <input id="a_monthly_withdrawals" type="slider"
+								name="a_monthly_withdrawals" value="5000"
+								class="js-range-slider" data-min="0" data-max="10000"
+								data-step="100" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_monthly_pension">
+								Monthly pension:</label> <input id="a_monthly_pension" type="slider"
+								name="a_monthly_pension" value="3000"
+								class="js-range-slider" data-min="0" data-max="10000"
+								data-step="20" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_n_sim">Number of
+								simulations:</label> <input id="a_n_sim" type="slider" name="a_n_sim"
+								value="25" class="js-range-slider" data-from="25" data-max="100"
+								data-step="1" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="#,##0.#####" data-smooth="FALSE" />
+						</div>
+					</div>
+               <div class="col-sm-3">
+                   	<div>
+							<label class="control-label" for="a_house_sale">
+								Sale of house:</label> <input id="a_house_sale" type="slider"
+								name="a_house_sale" value="200000"
+								class="js-range-slider" data-min="0" data-max="1000000"
+								data-step="1000" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_when_house_sale">
+								Years sell house:</label> <input id="a_when_house_sale" type="slider"
+								name="a_when_house_sale" value="10"
+								class="js-range-slider" data-min="0" data-max="50"
+								data-step="1" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+						<div>
+							<label class="control-label" for="a_income_other">
+								Passive Income:</label> <input id="a_income_other" type="slider"
+								name="a_income_other" value="0"
+								class="js-range-slider" data-min="0" data-max="5000"
+								data-step="100" data-skin="plastic" data-round="FALSE"
+								data-locale="us" data-format="$#,##0" data-smooth="FALSE" />
+						</div>
+
+                                 
+               </div>
+
+
+
+
+				</div>
+			</div>
+
+			<!-- end of ten columns -->
+			<!-- <div class="col-md-3 sidebar">sidebar</div> -->
+
+		</div>
+		<!--  end of row -->
+		<div class="row content">
+
+
+					<pre id="summary" class="shiny-text-output"></pre>
+					<div id="a_distPlot" class="shiny-plot-output"
+						style="width: 100%; height: 600px;"></div>
+      </div>
+
+		<hr>
+		<footer>
+
+			<!-- footer -->
+
+			<p>
+				<a href="https://plus.google.com/113536718163435376027?rel=author">Google+</a>
+				&nbsp; <a
+					href="https://www.mephistosoftware.com/wp/edward-odonnell-curriculum-vitae">Author
+					Information</a>
+			</p>
+
+		</footer>
+	</div>
+	<!-- end container -->
+</body>
+</html>

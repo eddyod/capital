@@ -1,0 +1,151 @@
+.section {
+/*	background: url(http://www.mephistosoftware.com/images/foam.png); */
+	color: #000000;
+}
+
+.header {
+  background-image: url("http://www.mephistosoftware.com/images/bartop.png");
+  background-color: #cccccc;
+  padding-left: 10px;
+border-bottom: #CCCCCC solid 1px;
+}
+
+.header h2, h6 {
+color: #FFFFFF;
+margin-left: 50px;
+}
+
+.container a {
+color: #1EAEDB;
+}
+
+.container p, label, legend {
+margin-bottom: 3px;
+}
+.ui-datagrid-content {
+/*	box-sizing: content-box|border-box|initial|inherit; */
+}
+
+.rankGrid {
+	width:60%;
+}
+.login {
+ color: #FFFFFF;
+}
+.login a {
+	text-decoration: none;
+}
+
+.login img {
+    margin-right: 5px;
+    border-radius: 50%;
+    display: block;
+    height: 32px;
+    width: 32px;
+}
+
+
+/* footer */
+#footer {
+    width: 76%;
+    margin-top: .5em;
+    color: #999;
+    margin-left: 1em;
+    text-align: center;
+}
+
+#footer_links{
+list-style:none;
+margin-top:.5em;
+margin-bottom:0;
+color: #000000;
+}
+
+#footer_links li{
+border-right:1px solid #ccc;
+display:inline;
+margin-left:0;
+margin-right:.5em;
+padding-right:.75em
+}
+
+.actionButtons {
+    padding: 0px 0px 5px 0px;
+}
+
+
+
+table.resultTable a {
+text-decoration: none;
+color: #000000;
+}
+
+table.resultTable a:hover {
+color: #000000;
+text-decoration: underline;
+}
+
+table.resultTable td:hover {
+color: #000000;
+background: #58b9d6;
+}
+
+
+#footer_links a {
+text-decoration: underline;
+color: #000000;
+}
+
+#footer_links a:hover {
+color: #1EAEDB;
+}
+
+.row img {
+float: right;
+margin: 50px;
+}
+
+.page_nav {
+	border: 2px solid #dce6f0;
+	margin: 1em -2em -1em;
+   background: #33C3F0;
+   box-shadow: 5px 5px 2px #888888;
+}
+
+.page_nav p {
+font-weight: bolder;
+text-align: center;
+}
+
+.page_nav li {
+	border-top: 1px solid #dce6f0;
+	color: #06c;
+	list-style: none;
+	margin: 0;
+	padding: 0
+}
+
+
+.page_nav li.active, .page_nav li a {
+	color: #016691;
+	display: block;
+	padding: .4em 0 .4em 1em;
+   text-decoration: none;
+}
+
+
+.page_nav li.active {
+	background-color: #fff;
+	color: #d56a03
+}
+
+.page_nav li a:hover {
+	background-color: #fff;
+	text-decoration: none
+}
+
+
+.page_nav li.collapsed ul {
+	display: none
+}
+
